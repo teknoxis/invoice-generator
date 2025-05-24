@@ -2,109 +2,125 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Invoice Generator</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- Include html2pdf library for PDF export -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart Invoice Generator</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Include html2pdf library for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Smart Invoice Generator</h1>
+    <div class="container">
+        <h1>Smart Invoice Generator</h1>
 
-    <section id="invoice-form">
-      <h2>Create Invoice</h2>
+        <section id="invoice-form">
+            <h2>Create Invoice</h2>
 
-      <div class="form-group">
-        <label>Client Name:</label>
-        <input type="text" id="client-name" placeholder="Enter client name" />
-      </div>
+            <div class="form-group">
+                <label>Client Name:</label>
+                <input type="text" id="client-name" placeholder="Enter client name" />
+            </div>
 
-      <div class="form-group">
-        <label>Client Email:</label>
-        <input type="email" id="client-email" placeholder="Enter client email" />
-      </div>
+            <div class="form-group">
+                <label>Client Email:</label>
+                <input type="email" id="client-email" placeholder="Enter client email" />
+            </div>
 
-      <div class="form-group">
-        <label>Phone no.:</label>
-        <input type="tel" id="client-phone" placeholder="Enter phone number" />
-      </div>
+            <div class="form-group">
+                <label>Phone no.:</label>
+                <input type="tel" id="client-phone" placeholder="Enter phone number" />
+            </div>
 
-      <div class="form-group">
-        <label>Address:</label>
-        <textarea id="client-address" rows="3" placeholder="Enter address"></textarea>
-      </div>
+            <div class="form-group">
+                <label>Address:</label>
+                <textarea id="client-address" rows="3" placeholder="Enter address"></textarea>
+            </div>
 
-      <div class="form-group">
-        <label>Invoice Date:</label>
-        <input type="date" id="invoice-date" />
-      </div>
+            <div class="form-group">
+                <label>Invoice Date:</label>
+                <input type="date" id="invoice-date" />
+            </div>
 
-      <div class="form-group">
-        <label>Due Date:</label>
-        <input type="date" id="due-date" />
-      </div>
+            <div class="form-group">
+                <label>Due Date:</label>
+                <input type="date" id="due-date" />
+            </div>
 
-      <div class="form-group">
-        <label>Currency:</label>
-        <select id="currency">
-          <option value="₹">INR (₹)</option>
-          <option value="$">USD ($)</option>
-          <option value="€">Euro (€)</option>
-        </select>
-      </div>
+            <div class="form-group">
+                <label>Currency:</label>
+                <select id="currency">
+                    <option value="₹">INR (₹)</option>
+                    <option value="$">USD ($)</option>
+                    <option value="€">Euro (€)</option>
+                </select>
+            </div>
 
-      <h3>Invoice Items</h3>
-      <table id="items-table">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="items-body"></tbody>
-      </table>
+            <h3>Invoice Items</h3>
+            <table id="items-table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="items-body"></tbody>
+            </table>
 
-      <button id="add-item" type="button">+ Add Item</button>
+            <button id="add-item" type="button">+ Add Item</button>
 
-      <div class="form-group">
-        <label>Tax (%)</label>
-        <input type="number" id="tax" value="0" min="0" />
-      </div>
+            <div class="form-group">
+                <label>Tax (%)</label>
+                <input type="number" id="tax" value="0" min="0" />
+            </div>
 
-      <div class="form-group">
-        <label>Discount (%)</label>
-        <input type="number" id="discount" value="0" min="0" />
-      </div>
+            <div class="form-group">
+                <label>Discount (%)</label>
+                <input type="number" id="discount" value="0" min="0" />
+            </div>
 
-      <h3>Grand Total: <span id="grand-total">₹ 0.00</span></h3>
+            <h3>Grand Total: <span id="grand-total">₹ 0.00</span></h3>
 
-      <button id="generate-invoice" type="button">Generate Invoice</button>
-    </section>
+            <button id="generate-invoice" type="button">Generate Invoice</button>
+        </section>
 
-    <section id="invoice-preview" style="display: none; margin-top: 20px;">
-      <h2>Invoice Preview</h2>
-      <div id="preview-content"></div>
+        <section id="invoice-preview" style="display: none; margin-top: 20px;">
+            <h2>Invoice Preview</h2>
+            <div id="preview-content"></div>
 
-      <div style="margin-top: 15px;">
-        <button id="print-invoice" type="button">🖨️ Print Invoice</button>
-      </div>
-    </section>
+            <div style="margin-top: 15px;">
+                <button id="print-invoice" type="button">🖨️ Print Invoice</button>
+            </div>
+        </section>
 
-    <section id="search-invoice" style="margin-top: 30px;">
-      <h2>Find Invoice by Serial Number</h2>
-      <input type="text" id="search-serial" placeholder="Enter Invoice Serial Number" />
-      <button id="search-btn" type="button">Search</button>
-      <p id="search-message" style="color: red; display: none;"></p>
-    </section>
-  </div>
+        <section id="search-invoice" style="margin-top: 30px;">
+            <h2>Find Invoice by Serial Number</h2>
+            <input type="text" id="search-serial" placeholder="Enter Invoice Serial Number" />
+            <button id="search-btn" type="button">Search</button>
+            <p id="search-message" style="color: red; display: none;"></p>
+        </section>
+    </div>
 
-  <script src="script.js"></script>
+    <footer
+        style="text-align: center; margin-top: 40px; padding: 20px 0; background-color: #f4f7fa; border-top: 1px solid #ddd; font-size: 0.9rem; color: #555;">
+        <p>© 2025 Teknoxis. All rights reserved.</p>
+        <p>
+            <a href="https://github.com/teknoxis" target="_blank" rel="noopener noreferrer"
+                style="margin-right: 15px; color: #333; text-decoration: none; font-size: 1.4rem;">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="www.linkedin.com/in/abhijeetkumar07" target="_blank" rel="noopener noreferrer"
+                style="color: #0077b5; text-decoration: none; font-size: 1.4rem;">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+        </p>
+    </footer>
+
+
+    <script src="script.js"></script>
 </body>
 
 </html>
